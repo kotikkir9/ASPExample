@@ -1,0 +1,52 @@
+﻿@model ICollection<Product>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <h1 class="display-4 text-center">Restaurant</h1>
+    <div class="table-responsive">
+        <table class="table table-hover table-light table-striped table-sm">
+            <thead>
+                <tr class="bg-warning" style="height:35px;">
+                    <th style="width: 80%;">Menu</th>
+                    <th style="width: 15%;">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    foreach (var product in Model)
+                    {
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@product.Price.ToString("F") DKK</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="2" class="text-center">No products</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <form method="post">
+        <div class="form-group">
+            <label  style="font-weight: bold;">Product</label><br>
+            <select class="form-control" name="productId" required>
+                @foreach (var product in Model)
+                {
+                    <option value="@product.Id">@product.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label  style="font-weight: bold;">Age</label>
+            <input Name="Age" class="form-control" placeholder="Your age" required type="number"/>
+        </div>
+        <button class="btn btn-success">Buy</button>
+    </form>
+</div>
