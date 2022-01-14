@@ -1,4 +1,5 @@
-﻿@model ICollection<Product>
+﻿@page
+@model IndexModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -15,9 +16,9 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model.Any())
+                @if (Model.Products.Any())
                 {
-                    foreach (var product in Model)
+                    foreach (var product in Model.Products)
                     {
                         <tr>
                             <td>@product.Name</td>
@@ -33,19 +34,22 @@
         </table>
     </div>
 
-    <form method="post">
+    <form method="post" asp-page-handler="calculate">
         <div class="form-group">
             <label for="product" style="font-weight: bold;">Product</label><br>
-            <select id="product" class="form-control" name="productId" required>
-                @foreach (var product in Model)
+            <select id="product" class="form-control" asp-for="ProductId" required>
+                @if(Model.Products.Any())
                 {
-                    <option value="@product.Id">@product.Name</option>
+                    @foreach (var product in Model.Products)
+                    {
+                        <option value="@product.Id">@product.Name</option>
+                    }     
                 }
             </select>
         </div>
         <div class="form-group">
             <label for="age" style="font-weight: bold;">Age</label>
-            <input id="age" Name="Age" class="form-control" placeholder="Your age" required type="number"/>
+            <input id="age" asp-for="Age" class="form-control" required type="number"/>
         </div>
         <button class="btn btn-success">Buy</button>
     </form>

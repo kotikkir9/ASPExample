@@ -1,0 +1,25 @@
+﻿@page 
+@model ResultModel
+
+@{
+    ViewData["Title"] = "Result";
+}
+
+<div class="text-center mt-4">
+   <h1>Your price: @Model.Price.ToString("F") DKK</h1> 
+   <a asp-page="Index">Return to startpage.</a>
+</div>
+
+@functions 
+{
+    public class ResultModel : PageModel
+    {
+        [BindProperty]
+        public double Price { get; set; }
+
+        public void OnGet(double price)
+        {
+            Price = price;
+        }   
+    }
+}
